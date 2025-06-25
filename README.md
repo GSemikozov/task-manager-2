@@ -41,8 +41,3 @@ task-manager-backend/    # Node.js/Express backend
 - Filtering, sorting, pagination
 - Assign/move tasks between categories
 - Responsive Angular Material UI
-
----
-
-## License
-MIT (or as specified) 
