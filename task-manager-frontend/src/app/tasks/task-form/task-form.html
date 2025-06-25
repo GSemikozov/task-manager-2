@@ -1,0 +1,38 @@
+<div class="task-form-container" *ngIf="task$ | async as task">
+  <form (ngSubmit)="saveTask(task)" #taskForm="ngForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput name="title" [(ngModel)]="task.title" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput name="description" [(ngModel)]="task.description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Due Date</mat-label>
+      <input matInput name="dueDate" [(ngModel)]="task.dueDate" type="date" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select name="status" [(ngModel)]="task.status" required>
+        <mat-option *ngFor="let status of statusOptions" [value]="status">{{ status }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Category</mat-label>
+      <mat-select name="categoryId" [(ngModel)]="task.categoryId">
+        <mat-option [value]="null">None</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.title }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-flat-button color="primary" type="submit" [disabled]="taskForm.invalid">Save</button>
+      <button mat-button type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div> 

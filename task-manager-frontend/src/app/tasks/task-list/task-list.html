@@ -1,0 +1,53 @@
+<div class="task-list-container">
+  <mat-card class="filter-panel">
+    <mat-card-title>
+      <mat-icon>filter_list</mat-icon>
+      Filters
+    </mat-card-title>
+    <div class="filters">
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="statusFilter" (selectionChange)="onFilterChange()">
+          <mat-option value="">All</mat-option>
+          <mat-option *ngFor="let status of statusOptions" [value]="status">{{ status }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="titleFilter" (ngModelChange)="onFilterChange()" placeholder="Search by title">
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="createTask()">New Task</button>
+    </div>
+  </mat-card>
+
+  <table mat-table [dataSource]="tasks" class="mat-elevation-z8">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef (click)="onSortChange('title')">Title</th>
+      <td mat-cell *matCellDef="let task">{{ task.title }}</td>
+    </ng-container>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let task">{{ task.description }}</td>
+    </ng-container>
+    <ng-container matColumnDef="dueDate">
+      <th mat-header-cell *matHeaderCellDef (click)="onSortChange('dueDate')">Due Date</th>
+      <td mat-cell *matCellDef="let task">{{ task.dueDate | date }}</td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef (click)="onSortChange('status')">Status</th>
+      <td mat-cell *matCellDef="let task">{{ task.status }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let task">
+        <button mat-icon-button color="primary" (click)="editTask(task)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="deleteTask(task)"><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['title', 'description', 'dueDate', 'status', 'actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['title', 'description', 'dueDate', 'status', 'actions'];"></tr>
+  </table>
+
+  <mat-paginator [length]="total" [pageSize]="pageSize" [pageIndex]="page-1" [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)"></mat-paginator>
+</div> 

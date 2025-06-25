@@ -1,0 +1,18 @@
+<div class="category-form-container" *ngIf="category$ | async as category">
+  <form (ngSubmit)="saveCategory(category)" #categoryForm="ngForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput name="title" [(ngModel)]="category.title" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput name="description" [(ngModel)]="category.description"></textarea>
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-flat-button color="primary" type="submit" [disabled]="categoryForm.invalid">Save</button>
+      <button mat-button type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div> 
